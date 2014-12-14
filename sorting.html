@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sorting Algorithms</title>
+</head>
+<body>
+	
+	<script>
+	function CArray(numElements){
+		this.dataStore = [];
+		this.pos = 0;
+		this.numElements = numElements;
+		this.insert = insert;
+		this.toString = toString;
+		this.clear = clear;
+		this.setData = setData;
+		for(var i=0; i<numElements; ++i){
+			this.dataStore[i] = i;
+		}
+		this.bubbleSort = bubbleSort;
+		this.selectionSort = selectionSort; 
+		this.insertionSort = insertionSort;
+		this.mergeSort = mergeSort;
+	}
+	function setData(){
+		for(var i=0; i<this.dataStore.length; ++i){
+			this.dataStore[i] = Math.floor(Math.random() * (this.numElements+1));
+		}
+	}
+	function insert(data){
+		this.dataStore[this.pos++] = data;
+	}
+	function toString(){
+		var result = "";
+		for(var i=0;i<this.dataStore.length;++i){
+			result += this.dataStore[i] + " ";
+			if(i > 0 && i % 10 == 0){
+				result += "\n";
+			}
+		}
+		return result;
+	}
+	function clear(){
+		for(var i=0; i<this.dataStore.length; ++i){
+			this.dataStore[i] = 0;
+		}
+	}
+	function swap(arr, index1, index2){
+		var temp = arr[index1];
+		arr[index1] = arr[index2];
+		arr[index2] = temp;
+	}
+
+	function bubbleSort(){
+		for(var i=0; i<this.dataStore.length; ++i){
+			for(var j=0; j<i; ++j){
+				if(this.dataStore[i] < this.dataStore[j]){
+					swap(this.dataStore, i, j);
+				}
+			}
+		}
+	}
+
+	function indexOfMinimum(array, index1){
+		var minValue = array[index1];
+		var minIndex = index1;
+		for(var i=minIndex; i<array.length; ++i){
+			if(array[i] < minValue){
+				minValue = array[i];
+				minIndex = i;
+			}
+		}
+		return minIndex;
+	}
+	function insert(array, rightIndex, value){
+		for(var i=rightIndex;  i >= 0 && array[i] >= value; i--){
+			array[i+1] = array[i];
+		}
+		array[i+1] = value;
+	}
+
+	function insertionSort(){
+		for(var i=0; i<this.dataStore.length; ++i){
+			insert(this.dataStore, i-1, this.dataStore[i]);
+		}
+	}
+
+	function selectionSort(){
+		for(var i=0; i<this.dataStore.length; ++i){
+			var min = indexOfMinimum(this.dataStore, i);
+			swap(this.dataStore, i, min);
+		}
+	}
+
+	function mergeSort(array, p, r){
+		if(p < r){
+			var q = Math.floor((p + r) / 2);
+			mergeSort(array, p, q);
+			mergeSort(array, q+1, r);
+			merge(array, p, q, r);
+		}
+	}
+
+	function merge(array, p, q, r){
+		var lowHalf = [];
+		var highHalf = [];
+		var k = p;
+		for(var i=0; k<=q; i++, k++){
+			lowHalf[i] = array[k];
+		}
+		for(var j=0; k<=r; j++, k++){
+			highHalf[j] = array[k];
+		}
+		k = p;
+		i = 0;
+		j = 0;
+		while(i < lowHalf.length && j < highHalf.length){
+			if(lowHalf[i] < highHalf[j]){
+				array[k] = lowHalf[i];
+				i++;
+			} else {
+				array[k] = highHalf[j];
+				j++;
+			}
+			k++;
+		}
+		while(i < lowHalf.length){
+			array[k] = lowHalf[i];
+			i++;
+			k++;
+		}
+		while(j < highHalf.length){
+			array[k] = highHalf[j];
+			j++;
+			k++;
+		}
+	}
+
+
+	var myNums = new CArray(100);
+	myNums.setData();
+	console.log(myNums.toString());
+
+	//myNums.bubbleSort();
+	
+	//myNums.selectionSort();
+	
+	//myNums.insertionSort();
+	
+	console.log("------------------------------");
+	
+	mergeSort(myNums.dataStore, 0, myNums.dataStore.length-1);
+
+	console.log(myNums.toString());
+
+	</script>
+</body>
+</html>

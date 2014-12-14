@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+	<script>
+	function Deque(){
+		this.dataStore = [];
+		this.endeque = endeque;
+		this.dedeque = dedeque;
+		this.front = front;
+		this.back = back;
+		this.toString = toString;
+		this.empty = empty;
+		this.count = count;
+	}
+	function endeque(item){
+		this.dataStore.push(item);
+		this.dataStore.unshift(item);
+	}
+	function count(){
+		return this.dataStore.length;
+	}
+	function dedeque(){
+		return this.dataStore.shift() + ", " + this.dataStore[this.dataStore.length-1];
+	}
+	function front(){
+		return this.dataStore[0];
+	}
+	function back(){
+		return this.dataStore[this.dataStore.length-1];
+	}
+	function toString(){
+		var retStr = "";
+		for(var i=0;i<this.dataStore.length;++i){
+			retStr += this.dataStore[i];
+		}
+		return retStr;
+	}
+	function empty(){
+		if(this.dataStore.length === 0){
+			return true;
+		}
+		return false;
+	}
+
+	/*var d = new Deque();
+	d.endeque("y");
+	d.endeque("u");
+	d.endeque("n");
+	d.endeque("u");
+	d.endeque("s");
+	//d.endeque("a");
+	//d.endeque("r");*/
+
+	function isPalindrome(word){
+		var d = new Deque();
+		for(var i=0;i<word.length;++i){
+			d.endeque(word[i]);
+		}
+		var count = d.count()/2;
+		var first = "";
+		var second = "";
+		for(var j=0;j<count;++j){
+			first += d.dataStore[j];
+		}
+		for(var k=count;k<d.count();++k){
+			second += d.dataStore[k];
+		}
+		if(first === second){
+			return true;
+		}
+		return false;
+	}
+
+	document.body.innerHTML = isPalindrome("tusubasasabusut");
+
+	</script>
+</body>
+</html>

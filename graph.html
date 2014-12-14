@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Graphs and Graph Algorithms</title>
+</head>
+<body>
+	<script>
+	function Vertex(label){
+		this.label = label;
+		//this.wasVisited = false;
+	}
+	function Graph(v){
+		this.vertices = v;
+		this.edges = 0;
+		this.adj = [];
+		for(var i=0;i<this.vertices;++i){
+			this.adj[i] = [];
+			this.adj[i].push("");
+		}
+		this.addEdge = addEdge;
+		this.showGraph = showGraph;
+		this.dfs = dfs;
+		this.bfs = bfs;
+		this.marked = [];
+		this.edgeTo = [];
+		for(var i=0;i<this.vertices;++i){
+			this.marked[i] = false;
+		}
+	}
+	function addEdge(v, w){
+		this.adj[v].push(w);
+		this.adj[w].push(v);
+		this.edges++;
+	}
+
+	function showGraph(){
+		var result = "";
+		for(var i=0;i<this.vertices;++i){
+			result += '\n' + i + " -> ";
+			for(var j=0;j<this.vertices;++j){
+				if(this.adj[i][j] != undefined) result += this.adj[i][j] + ' ';
+			}
+		}
+		console.log(result);
+	}
+	function dfs(v){
+		this.marked[v] = true;
+		if(this.adj[v] != undefined){
+			console.log("Visitied vertex: " + v);
+		}
+
+		for(var w in this.adj[v]){
+			//console.log(w);
+			//if(!this.marked[this.adj[v].indexOf(w)]){
+			//	this.dfs(this.adj[v].indexOf(w));
+			//}
+		}
+	
+	}
+
+	var g = new Graph(5);
+	g.addEdge(0, 1);
+	g.addEdge(0, 2);
+	g.addEdge(1, 3);
+	g.addEdge(2, 4);
+	g.showGraph();
+
+
+	g.dfs(0);
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+	<script>
+	function Queue(){
+		this.dataStore = [];
+		this.enqueue = enqueue;
+		this.dequeue = dequeue;
+		this.front = front;
+		this.back = back;
+		this.toString = toString;
+		this.empty = empty;
+	}
+	function empty(){
+		if(this.dataStore.length === 0){
+			return true;
+		}
+		return false;
+	}
+	function toString(){
+		var retStr = "";
+		for(var i=0;i<this.dataStore.length;++i){
+			retStr += this.dataStore[i];
+		}
+		return retStr;
+	}
+	function front(){
+		return this.dataStore[0];
+	}
+	function back(){
+		return this.dataStore[this.dataStore.length-1];
+	}
+	function enqueue(item){
+		this.dataStore.push(item);
+	}
+	function dequeue(){
+		return this.dataStore.shift();
+	}
+	var q = new Queue();
+	q.enqueue("Yunus");
+	q.enqueue("Osman");
+	q.enqueue("Ela");
+	q.enqueue("Bade");
+	q.enqueue("Mustafa");
+	q.enqueue("Emre");
+	q.enqueue("Ayse");
+
+	document.body.innerHTML = q.dequeue();
+	</script>
+</body>
+</html>
