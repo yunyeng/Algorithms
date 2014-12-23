@@ -68,9 +68,7 @@ function maxHeapify(i){
 	}
 }
 function build(){
-	for(var i=Math.floor((this.length()-1)/2); i>=0; i--){
-		this.maxHeapify(i);
-	}
+	for(var i=Math.floor((this.length()-1)/2); i>=0; i--) this.maxHeapify(i);
 }
 function sort(A){
 	this.build();
@@ -82,5 +80,6 @@ function sort(A){
 }
 
 var h = new Heap([5, 3, 17, 10, 84, 19, 6, 22, 9]);
-h.sort();
-console.log(h.dataStore);
+h.insert(102)
+h.build();
+console.log(h.heapMax());

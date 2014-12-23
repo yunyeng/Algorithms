@@ -40,9 +40,7 @@ function maxHeapify(i){
 	}
 }
 function build(){
-	for(var i=Math.floor((this.length()-1)/2); i>=0; i--){
-		this.maxHeapify(i);
-	}
+	for(var i=Math.floor((this.length()-1)/2); i>=0; i--) this.maxHeapify(i);
 }
 function sort(A){
 	this.build();
