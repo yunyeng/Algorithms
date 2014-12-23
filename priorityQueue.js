@@ -82,4 +82,4 @@ function sort(A){
 var h = new Heap([5, 3, 17, 10, 84, 19, 6, 22, 9]);
 h.insert(102)
 h.build();
-console.log(h.heapMax());
+console.log(h.dataStore);

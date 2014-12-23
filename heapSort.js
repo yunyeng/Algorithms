@@ -6,7 +6,9 @@ function Heap(a){
 	this.build = build;
 	this.maxHeapify = maxHeapify;
 	this.swap = swap;
+	this.erase = erase;
 	this.length = length;
+	this.show = show;
 }
 function length(){
 	return this.dataStore.length;
@@ -50,7 +52,23 @@ function sort(A){
 		this.maxHeapify(0);
 	}
 }
+function erase(i){
+	if(this.N < 0) throw "heap underflow";
+	this.dataStore[i] = this.dataStore[this.N];
+	this.N--;
+	this.maxHeapify(i);
+}
+function show(){
+	var result = "";
+	for(var i=0; i<=this.N; i++){
+		result += this.dataStore[i] + "\n";
+	}
+	return result;
+}
 
 var h = new Heap([5, 3, 17, 10, 84, 19, 6, 22, 9]);
-h.sort();
+//h.sort();
+console.log(h.dataStore);
+h.erase(1);
+//h.sort();
 console.log(h.dataStore);
