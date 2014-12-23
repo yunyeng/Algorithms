@@ -6,6 +6,10 @@ function Heap(a){
 	this.build = build;
 	this.maxHeapify = maxHeapify;
 	this.swap = swap;
+	this.heapMax = heapMax;
+	this.extractMax = extractMax;
+	this.increaseKey = increaseKey;
+	this.insert = insert;
 	this.length = length;
 }
 function length(){
@@ -27,6 +31,30 @@ function parent(i){
 }
 function find(i){
 	return this.dataStore[i];
+}
+function heapMax(){
+	return this.dataStore[0];
+}
+function extractMax(){
+	if(this.N < 0) throw "Heap underflow!";
+	var max = this.dataStore[0];
+	this.dataStore[0] = this.find(this.N);
+	this.N--;
+	this.maxHeapify(0);
+	return max;
+}
+function increaseKey(i, key){
+	if(key < this.find(i)) throw "New key is smaller than current key.";
+	this.dataStore[i] = key;
+	while(i > 0 && this.find(parent(i)) > this.find(i)){
+		this.swap(i, parent(i));
+		i = parent(i);
+	}
+}
+function insert(key){
+	this.N++;
+	this.dataStore[this.N] = Number.NEGATIVE_INFINITY;
+	this.increaseKey(this.N, key);
 }
 function maxHeapify(i){
 	var r = right(i);
