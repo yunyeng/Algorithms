@@ -1,9 +1,10 @@
 function countingSort(A){
-	var k = Number.NEGATIVE_INFINITY;
+	// Assume the max value 0th element, then we can search starting from 1st
+	var k = A[0];
 	var C = [];
 	var B = [];
-	// Finding maximum value in input array
-	for(var i=0; i<A.length; i++) if(A[i] > k) k = A[i];
+	// Finding maximum value in input array starting from 1st value
+	for(var i=1; i<A.length; i++) if(A[i] > k) k = A[i];
 	// Creating new array to use as big as the max value k and initializing to 0
 	for(i=0; i<=k; i++) C[i] = 0;
 	// Incrementing all the values that exists in input array
@@ -15,6 +16,7 @@ function countingSort(A){
 		B[C[A[j]]-1] = A[j];
 		C[A[j]]--;
 	}
+	// Returning the output array B, we could take this as parameter and sort it in place.
 	return B;
 }
 
