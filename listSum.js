@@ -1,37 +1,8 @@
-function Node(key){
-	this.key = key;
-	this.next = null;
-	this.prev = null;
-}
-function LList(){
-	this.head = new Node("head");
-	this.insert = insert;
-	this.length = 0;
-	this.show = show;
-}
-function insert(key){
-	var node = new Node(key);
-	var currNode = this.head;
-	while(currNode.next != null){
-		currNode = currNode.next;
-		this.length++;
-	}
-	currNode.next = node;
-}
-function show(){
-	var node = this.head.next;
-	var result = "";
-	while(node != null){
-		result += node.key;
-		if(node.next != null) result += " -> ";
-		node = node.next;
-	}
-	return result;
-}
+var LLists = require('./linkedLists.js');
 
-var list1 = new LList();
-var list2 = new LList();
-var newList = new LList();
+var list1 = new LLists();
+var list2 = new LLists();
+var newList = new LLists();
 
 list1.insert(7);
 list1.insert(1);
