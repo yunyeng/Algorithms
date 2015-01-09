@@ -15,6 +15,7 @@ function BST(){
 	this.predecessor = predecessor;
 	this.maximum = maximum;
 	this.minimum = minimum;
+	this.inOrder = inOrder;
 }
 function search(key){
 	var x = this.root;
@@ -38,6 +39,13 @@ function successor(x){
 		p = p.parent;
 	}
 	return p;
+}
+function inOrder(x){
+	if(x != null){
+		this.inOrder(x.left);
+		console.log(x.key);
+		this.inOrder(x.right);
+	}
 }
 function predecessor(x){
 	if(x.left != null) return maximum(x.left);
@@ -88,3 +96,5 @@ function remove(key){
 		y.left.parent = y;
 	}
 }
+
+module.exports = BST;
