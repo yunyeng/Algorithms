@@ -15,7 +15,9 @@ function BST(){
 	this.predecessor = predecessor;
 	this.maximum = maximum;
 	this.minimum = minimum;
+	this.preOrder = preOrder;
 	this.inOrder = inOrder;
+	this.postOrder = postOrder;
 }
 function search(key){
 	var x = this.root;
@@ -40,11 +42,25 @@ function successor(x){
 	}
 	return p;
 }
+function preOrder(x){
+	if(x != null){
+		console.log(x.key);
+		this.preOrder(x.left);
+		this.preOrder(x.right);
+	}
+}
 function inOrder(x){
 	if(x != null){
 		this.inOrder(x.left);
 		console.log(x.key);
 		this.inOrder(x.right);
+	}
+}
+function postOrder(x){
+	if(x != null){
+		this.postOrder(x.left);
+		this.postOrder(x.right);
+		console.log(x.key);
 	}
 }
 function predecessor(x){
@@ -71,8 +87,8 @@ function insert(key){
 		if(y == null) 		 this.root = newNode;
 		else if(key < y.key) y.left = newNode;
 		else					 y.right = newNode;
-		this.length++;
 	}
+	this.length++;
 }
 function transplant(u, v){
 	if(u.parent == null) 		 this.root = v;
