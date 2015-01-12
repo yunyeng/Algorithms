@@ -15,8 +15,12 @@ function enqueue(element){
 	this.dataStore[this.tail++] = element;
 }
 function dequeue(){
-	if(!this.empty()) return this.dataStore[this.head++];
-	else return false;
+	if(!this.empty()){
+		this.length--;
+		return this.dataStore[this.head++];
+	} else {
+		return false;
+	}
 }
 function front(){
 	if(!this.empty()) return this.dataStore[this.head];
