@@ -59,18 +59,4 @@ function toString(){
 	return false;
 }
 
-var q = new Queue();
-q.enqueue("Yunus");
-q.enqueue("Ali");
-q.enqueue("Orhan");
-q.enqueue("Murat");
-q.enqueue("Kamil");
-q.enqueue("Nalan");
-
-q.dequeue();
-q.dequeue();
-q.dequeue();
-console.log(q.length);
-
-
 module.exports = Queue;
