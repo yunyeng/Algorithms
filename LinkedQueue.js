@@ -27,6 +27,7 @@ function enqueue(key){
 function dequeue(){
 	if(!this.empty){
 		var node = this.head.next;
+		this.length--;
 		this.head.next = this.head.next.next;
 		this.head.next.prev = this.head;
 		return node.key;
@@ -57,5 +58,19 @@ function toString(){
 	}
 	return false;
 }
+
+var q = new Queue();
+q.enqueue("Yunus");
+q.enqueue("Ali");
+q.enqueue("Orhan");
+q.enqueue("Murat");
+q.enqueue("Kamil");
+q.enqueue("Nalan");
+
+q.dequeue();
+q.dequeue();
+q.dequeue();
+console.log(q.length);
+
 
 module.exports = Queue;
