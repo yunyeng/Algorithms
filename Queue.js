@@ -7,20 +7,18 @@ function Queue(){
 	this.front = front;
 	this.back = back;
 	this.empty = empty;
-	this.length = 0;
+	this.length = length;
 	this.toString = toString;
 }
 function enqueue(element){
-	this.length++;
 	this.dataStore[this.tail++] = element;
 }
 function dequeue(){
-	if(!this.empty()){
-		this.length--;
-		return this.dataStore[this.head++];
-	} else {
-		return false;
-	}
+	if(!this.empty())	return this.dataStore[this.head++];
+	else	return false;
+}
+function length(){
+	return this.tail - this.head;
 }
 function front(){
 	if(!this.empty()) return this.dataStore[this.head];
