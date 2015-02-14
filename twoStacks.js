@@ -1,17 +1,17 @@
 var Stack = require('./Stack.js');
-var s1 = new Stack();
-var s2 = new Stack();
+var inbox = new Stack();
+var outbox = new Stack();
 
 function enqueue(element){
-	s1.push(element);
+	inbox.push(element);
 }
 function dequeue(){
-	if(s2.empty()){
-		while(!s1.empty()){
-			s2.push(s1.pop());
+	if(outbox.empty()){
+		while(!inbox.empty()){
+			outbox.push(inbox.pop());
 		}
 	}
-	return s2.pop();
+	return outbox.pop();
 }
 
 
