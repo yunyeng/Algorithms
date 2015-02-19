@@ -229,21 +229,53 @@ class BST <T extends Comparable<T>>{
 		return false;
 	}
 	
+	public void minHeight(ArrayList<T> arr, int min, int max){
+		if(min <= max){
+			int mid = (min + max)/2;
+			insert(arr.get(mid));
+			minHeight(arr, min, mid-1);
+			minHeight(arr, mid+1, max);
+		}
+	}
+	
 	public static void main(String[] args) {
-		BST<Integer> b = new BST<Integer>();
+		/*
 		b.insert(3);
 		b.insert(5);
 		b.insert(7);
 		b.insert(1);
 		b.insert(8);
 		b.insert(12);
+		*/
+		
+		ArrayList<Integer> hop = new ArrayList<Integer>() {{
+			add(3);
+			add(5);
+			add(6);
+			add(10);
+			add(21);
+			add(33);
+			add(45);
+			add(46);
+			add(50);
+			add(60);
+			add(72);
+			add(98);
+			add(201);
+			add(300);
+		}};
+		//3, 5, 6, 10, 21, 33, 45, 46, 50, 60, 72, 98, 201, 300
+		//int[] hop = {};
+		BST<Integer> b = new BST<Integer>();
+		
+		b.minHeight(hop, 0, hop.size()-1);
 		
 		//System.out.println(b.findMax());
 		
 		//b.inOrder(b.root);
 		//System.out.println(b.isBinary());
 		
-		System.out.println(b.predecessor(b.root.right.right).key);
+		//System.out.println(b.predecessor(b.root.right.right).key);
 		
 		//b.collect(b.root, ar);
 		
