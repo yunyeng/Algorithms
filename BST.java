@@ -75,6 +75,33 @@ class BST <T extends Comparable<T>>{
 		return n;
 	}
 	
+	public Node minimum(Node x){
+		while(x.left != null) x = x.left;
+		return x;
+	}
+	public Node maximum(Node x){
+		while(x.right != null) x = x.right;
+		return x;
+	}
+	public Node successor(Node x){
+		if(x.right != null) return this.minimum(x.right);
+		Node p = x.parent;
+		while(p != null && x == p.right){
+			x = p;
+			p = p.parent;
+		}
+		return p;
+	}
+	public Node predecessor(Node x){
+		if(x.left != null) return this.maximum(x.left);
+		Node p = x.parent;
+		while(p != null && x == p.left){
+			x = p;
+			p = p.parent;
+		}
+		return p;
+	}
+	
 	public boolean contains(Node r, T key){
 		if(r == null) return false;
 		int cmp = key.compareTo(r.key);
@@ -216,8 +243,10 @@ class BST <T extends Comparable<T>>{
 		//b.inOrder(b.root);
 		//System.out.println(b.isBinary());
 		
+		System.out.println(b.predecessor(b.root.right.right).key);
+		
 		//b.collect(b.root, ar);
-		System.out.println(b.checkBinary(b.root));
+		
 		
 		//System.out.println(b.root.right.right.right.right.key);
 		
