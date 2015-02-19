@@ -14,6 +14,7 @@ class BST <T extends Comparable<T>>{
 	Node root = null;
 	int length = 0;
 	int height = 0;
+	T lastPrinted;
 	
 	public int height(Node node){
 		if(node == null) return 0;
@@ -190,22 +191,16 @@ class BST <T extends Comparable<T>>{
 		leftNode.right = node;
 	}
 	
-	public void collect(Node n, ArrayList<T> ar){
+	public boolean checkBinary(Node n){
 		if(n != null){
-			this.collect(n.left, ar);
-			ar.add(n.key);
-			this.collect(n.right, ar);
+			checkBinary(n.left);
+			if(lastPrinted != null && n.key.compareTo(lastPrinted) <= 0) return false;
+			lastPrinted = n.key;
+			checkBinary(n.right);
+			return true;
 		}
+		return false;
 	}
-	public boolean checkBinary(){
-		ArrayList<T> ar = new ArrayList<T>();
-		collect(root, ar);
-		for(int i=0; i<ar.size()-1; i++){
-			if(ar.get(i+1).compareTo(ar.get(i)) < 0) return false;
-		}
-		return true;
-	}
-	
 	
 	public static void main(String[] args) {
 		BST<Integer> b = new BST<Integer>();
@@ -222,7 +217,7 @@ class BST <T extends Comparable<T>>{
 		//System.out.println(b.isBinary());
 		
 		//b.collect(b.root, ar);
-		System.out.println(b.checkBinary());
+		System.out.println(b.checkBinary(b.root));
 		
 		//System.out.println(b.root.right.right.right.right.key);
 		
