@@ -1,7 +1,7 @@
 import java.util.*;
 class BST <T extends Comparable<T>>{
 	
-	class Node {
+	public class Node {
 		T key;
 		Node parent = null;
 		Node right = null;
@@ -16,21 +16,12 @@ class BST <T extends Comparable<T>>{
 	int height = 0;
 	T lastPrinted;
 	
-	public int height(Node node){
-		if(node == null) return 0;
-		Node current = node;
-		int heightLeft = 0;
-		int heightRight = 0;
-		while(current.left != null){
-			current = current.left;
-			heightLeft++;
-		}
-		current = node;
-		while(current.right != null){
-			current = current.right;
-			heightRight++;
-		}		
-		return Math.max(heightLeft, heightRight) + 1;
+	public int height(Node node) {
+		if(node == null) return -1;
+		int hl = height(node.left);
+		int hr = height(node.right);
+		int h = 1 + Math.max(hl, hr);
+		return h;
 	}
 	
 	public void insert(T key){
