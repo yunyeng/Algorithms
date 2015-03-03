@@ -19,4 +19,5 @@ class MatrixSearch {
 		int[][] arr = {{15, 20, 40, 85}, {20, 35, 80, 95}, {30, 55, 95, 105}, {40, 80, 100, 120}};
 		System.out.print(search(arr, 80));
 	}
+	
 }
