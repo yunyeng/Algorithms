@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.Stack;
 class VendingMachine {
@@ -15,25 +16,31 @@ class VendingMachine {
 	
 	class KeyCode {
 		int code;
-		public void enterCode(int c){
+		public String enterCode(int c){
 			if(c > 99 || c < 0){
 				screen = "Wrong Number! There is no product with this code.";
 			} else if(products.get(c).many < 1){
 				screen = "Sorry, we ran out of this product.";
 			} else {
 				product = products.get(c);
-				products.get(c).many--;
+				if(balance > product.price){
+					product.many--;
+					Outbox o = new Outbox(product);
+				} else {
+					screen = "Insufficient Funds! Please add funds.";
+				}
 			}
-			code = c;
+		 	code = c;
+			return screen;
 		}
 	}
 	
 	class Change {
-		int pennies;
-		int nickels;
-		int dimes;
-		int quarters;
-		int bills;
+		int pennies; // 0.01
+		int nickels; // 0.05
+		int dimes; // 0.10
+		int quarters; // 0.25
+		int bills; // 1.00
 		public void insertMoney(String type, int many){
 			type = type.toLowerCase();
 			if(type == "bill" || type == "bills"){
@@ -71,6 +78,12 @@ class VendingMachine {
 	
 	class Outbox {
 		boolean dropped = false;
+		int chance;
+		public Outbox(Product p){
+			Random rand = new Random();
+			chance = rand.nextInt(31);
+			System.out.print(chance);
+		}
 	}
 	
 	public VendingMachine(int s){
@@ -100,10 +113,28 @@ class VendingMachine {
 		return showcase;
 	}
 	
+	public void buy(int c){
+		KeyCode k = new KeyCode();
+		System.out.print(k.enterCode(c));
+	}
+	
+	public void insert(){
+		
+	}
+	
 	public static void main(String[] args) {
 		VendingMachine v = new VendingMachine(48);
 		v.stock(0, "Twix", false, 1.25, 10);
 		v.stock(5, "Snickers", false, 1.35, 8);
+		v.stock(13, "Doritos Cheese", false, 1.50, 10);
+		v.stock(14, "Lays Classic", false, 1.50, 10);
+		v.stock(15, "Ruffles Original", false, 1.50, 10);
+		v.stock(31, "Pepsi", true, 1.75, 6);
+		v.stock(32, "Pepsi Light", true, 1.75, 6);
+		v.stock(33, "7UP", true, 1.65, 6);
+		v.stock(34, "7UP Orange", true, 1.65, 4);
 		System.out.print(v.show());
+		//v.insertMoney()
+		v.buy(34);
 	}
 }
