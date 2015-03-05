@@ -5,7 +5,7 @@ class VendingMachine {
 	
 	double balance = 0.0;
 	int shelves;
-	String screen = "Please insert cash or credit/debit card, then select your product.\n";
+	protected String screen = "Please insert cash or credit/debit card, then select your product.\n";
 	String showcase = "";
 	ArrayList<Product> products = new ArrayList<Product>();
 	Product product;
@@ -35,13 +35,13 @@ class VendingMachine {
 		}
 	}
 	
-	class Change {
+	class Funds {
 		int pennies; // 0.01
 		int nickels; // 0.05
 		int dimes; // 0.10
 		int quarters; // 0.25
 		int bills; // 1.00
-		public void insertMoney(String type, int many){
+		protected void insertMoney(int many, String type){
 			type = type.toLowerCase();
 			if(type == "bill" || type == "bills"){
 				if(many > 1)	screen = "Maximum 1 Dollar Bills are allowed.";
@@ -56,7 +56,18 @@ class VendingMachine {
 				balance += many * 0.25;
 			}
 			if(balance > 0.0)	screen = "Balance: $" + balance + " Select your product.";
-			System.out.println(screen);
+			screen();
+		}
+		protected boolean validCard(String type, String number){
+			type = type.toLowerCase();
+			if(type != "visa" ^ type != "mastercard"){
+				screen = "Only Visa and MasterCard are accepted!";
+				return false;
+			} else if(number.length() != 16){
+				screen = "Authorization Error! Try Again.";
+				return false;
+			}
+			return true;
 		}
 	}
 	
@@ -83,21 +94,25 @@ class VendingMachine {
 		public Outbox(Product p){
 			Random rand = new Random();
 			chance = rand.nextInt(31);
-			if(chance < 22){
+			if(chance < 24){
 				dropped = true;
 				balance -= p.price;
-				screen = "Item Purchased Successfully. Balance: $" + balance;
+				if(balance > 0){ 
+					screen = "Item Purchased Successfully. Change: $" + balance;
+					giveChange(balance);
+				}
 			} else {
 				screen = "Item Stuck! Please select again!";
 				dropped = false;
 			}
 		}
+		public void giveChange(double r){
+			screen = "Here is your change $"+r+" back! Thank you!";
+		}
 	}
 	
 	public VendingMachine(int s){
-		//Change c = new Change();
-		//c.insertMoney("dimes", 1);
-		System.out.print(screen);
+		screen();
 		shelves = s;
 		for(int i=0; i<s; i++){
 			products.add(new Product());
@@ -110,7 +125,7 @@ class VendingMachine {
 		products.set(c, p);
 	}
 	
-	public String show(){
+	public void show(){
 		for(int i=0; i<products.size(); i++){
 			if(products.get(i).name != null){
 				showcase += products.get(i).code + " | ";
@@ -118,7 +133,7 @@ class VendingMachine {
 				showcase += products.get(i).price + "\n";
 			}
 		}
-		return showcase;
+		System.out.print(showcase);
 	}
 	
 	public void buy(int c){
@@ -126,13 +141,22 @@ class VendingMachine {
 		k.enterCode(c);
 	}
 	
-	public void insert(String type, int many){
-		Change c = new Change();
-		c.insertMoney(type, many);
+	public void insert(int many, String type){
+		Funds f = new Funds();
+		f.insertMoney(many, type);
 		
 	}
-	public void insert(int card){
-		
+	public void insert(String type, String number){
+		Funds f = new Funds();
+		if(f.validCard(type, number)){
+			balance += 1.25;
+			screen = "Authorization Successful! Your Balance is: " + balance;
+		}
+		screen();
+	}
+	
+	public void screen(){
+		System.out.println(screen);
 	}
 	
 	public static void main(String[] args) {
@@ -146,10 +170,9 @@ class VendingMachine {
 		v.stock(32, "Pepsi Light", true, 1.75, 6);
 		v.stock(33, "7UP", true, 1.65, 6);
 		v.stock(34, "7UP Orange", true, 1.65, 4);
-		System.out.print(v.show());
-		v.insert("dimes", 20);
-		v.insert("dimes", 20);
-		v.insert("dimes", 20);
-		v.buy(34);
+		v.show();
+		//v.insert(1, "bill");
+		v.insert("Visa", "1234567891011121");
+		v.buy(13);
 	}
 }
