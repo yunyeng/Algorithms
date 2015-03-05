@@ -16,7 +16,7 @@ class VendingMachine {
 	
 	class KeyCode {
 		int code;
-		public String enterCode(int c){
+		public void enterCode(int c){
 			if(c > 99 || c < 0){
 				screen = "Wrong Number! There is no product with this code.";
 			} else if(products.get(c).many < 1){
@@ -31,7 +31,7 @@ class VendingMachine {
 				}
 			}
 		 	code = c;
-			return screen;
+			System.out.println(screen);
 		}
 	}
 	
@@ -55,7 +55,8 @@ class VendingMachine {
 			} else if(type == "quarter" || type == "quarters"){
 				balance += many * 0.25;
 			}
-			if(screen == "")	screen = "Balance: $" + balance;
+			if(balance > 0.0)	screen = "Balance: $" + balance + " Select your product.";
+			System.out.println(screen);
 		}
 	}
 	
@@ -82,7 +83,14 @@ class VendingMachine {
 		public Outbox(Product p){
 			Random rand = new Random();
 			chance = rand.nextInt(31);
-			System.out.print(chance);
+			if(chance < 22){
+				dropped = true;
+				balance -= p.price;
+				screen = "Item Purchased Successfully. Balance: $" + balance;
+			} else {
+				screen = "Item Stuck! Please select again!";
+				dropped = false;
+			}
 		}
 	}
 	
@@ -115,10 +123,15 @@ class VendingMachine {
 	
 	public void buy(int c){
 		KeyCode k = new KeyCode();
-		System.out.print(k.enterCode(c));
+		k.enterCode(c);
 	}
 	
-	public void insert(){
+	public void insert(String type, int many){
+		Change c = new Change();
+		c.insertMoney(type, many);
+		
+	}
+	public void insert(int card){
 		
 	}
 	
@@ -134,7 +147,9 @@ class VendingMachine {
 		v.stock(33, "7UP", true, 1.65, 6);
 		v.stock(34, "7UP Orange", true, 1.65, 4);
 		System.out.print(v.show());
-		//v.insertMoney()
+		v.insert("dimes", 20);
+		v.insert("dimes", 20);
+		v.insert("dimes", 20);
 		v.buy(34);
 	}
 }
