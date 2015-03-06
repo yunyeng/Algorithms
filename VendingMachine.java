@@ -5,6 +5,7 @@ class VendingMachine {
 	
 	double balance = 0.0;
 	int shelves;
+	boolean card;
 	protected String screen = "Please insert cash or credit/debit card, then select your product.\n";
 	String showcase = "";
 	ArrayList<Product> products = new ArrayList<Product>();
@@ -23,7 +24,7 @@ class VendingMachine {
 				screen = "Sorry, we ran out of this product.";
 			} else {
 				product = products.get(c);
-				if(balance > product.price){
+				if(balance >= product.price){
 					product.many--;
 					Outbox o = new Outbox(product);
 				} else {
@@ -31,7 +32,6 @@ class VendingMachine {
 				}
 			}
 		 	code = c;
-			System.out.println(screen);
 		}
 	}
 	
@@ -56,6 +56,7 @@ class VendingMachine {
 				balance += many * 0.25;
 			}
 			if(balance > 0.0)	screen = "Balance: $" + balance + " Select your product.";
+			card = false;
 			screen();
 		}
 		protected boolean validCard(String type, String number){
@@ -94,12 +95,18 @@ class VendingMachine {
 		public Outbox(Product p){
 			Random rand = new Random();
 			chance = rand.nextInt(31);
-			if(chance < 24){
+			if(chance < 27){
 				dropped = true;
 				balance -= p.price;
 				if(balance > 0){ 
-					screen = "Item Purchased Successfully. Change: $" + balance;
-					giveChange(balance);
+					if(card){
+						screen = "Item Purchased Successfully. Exit? or Buy Another?";
+					} else {
+						screen = "Item Purchased Successfully. Change: $" + balance;
+						giveChange(balance);
+					}
+				} else if(balance == 0){
+					screen = "Item Purchased Successfully. Thank you.";
 				}
 			} else {
 				screen = "Item Stuck! Please select again!";
@@ -136,9 +143,16 @@ class VendingMachine {
 		System.out.print(showcase);
 	}
 	
+	public void exit(boolean c){
+		if(c)	screen = "Thank you.";
+		else	screen = "Your Balance is: " + balance +" Select your product.";
+		screen();
+	}
+	
 	public void buy(int c){
 		KeyCode k = new KeyCode();
 		k.enterCode(c);
+		screen();
 	}
 	
 	public void insert(int many, String type){
@@ -149,8 +163,9 @@ class VendingMachine {
 	public void insert(String type, String number){
 		Funds f = new Funds();
 		if(f.validCard(type, number)){
+			card = true;
 			balance += 1.25;
-			screen = "Authorization Successful! Your Balance is: " + balance;
+			screen = "Authorization is valid. Your Balance is: " + balance;
 		}
 		screen();
 	}
@@ -170,9 +185,15 @@ class VendingMachine {
 		v.stock(32, "Pepsi Light", true, 1.75, 6);
 		v.stock(33, "7UP", true, 1.65, 6);
 		v.stock(34, "7UP Orange", true, 1.65, 4);
+		v.stock(19, "Grandma's Cookies", true, 1.15, 6);
 		v.show();
 		//v.insert(1, "bill");
 		v.insert("Visa", "1234567891011121");
-		v.buy(13);
+		v.buy(19);
+		v.exit(false);
+		v.buy(5);
+		v.insert("Visa", "1234567891011121");
+		v.buy(0);
+		v.exit(true);
 	}
 }
