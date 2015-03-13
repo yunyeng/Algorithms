@@ -22,6 +22,7 @@ class emptyStrings {
 	
 	
 	public static void main(String[] args) {
-		String[] arr = {"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""};		System.out.print(find(arr, "ball", 0, arr.length-1));
+		String[] arr = {"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""};
+		System.out.print(find(arr, "ball", 0, arr.length-1));
 	}
 }
