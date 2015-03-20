@@ -1,15 +1,13 @@
 function rotate(image){
-	var n = image.length;
-	for(var layer=0; layer<Math.floor(n/2); layer++){
-		var first = layer;
-		var last = n - layer - 1;
-		for(var i=first; i<last; i++){
-			var offset = i - first;
-			var top = image[first][i];
-			image[first][i] = image[last-offset][first];
-			image[last-offset][first] = image[last][last-offset];
-			image[last][last-offset] = image[i][last];
-			image[i][last] = top;
+	var ROWS = image.length;
+	var COLS = image[0].length;
+	for(var row=0; row<Math.floor(ROWS/2); row++){
+		for(var col=row; col<COLS-row-1; col++){
+			var top = image[row][col];
+			image[row][col] = image[ROWS-col-1][row];
+			image[ROWS-col-1][row] = image[ROWS-row-1][ROWS-col-1];
+			image[ROWS-row-1][ROWS-col-1] = image[col][ROWS-row-1];
+			image[col][ROWS-row-1] = top;
 		}
 	}
 }
@@ -20,5 +18,5 @@ var image = [["abcd", "efgh", "ijkl", "mnop"],
 				["+=-`", "¡™£¢", "∞§¶•", "ªº–≠"]];
 				
 var image2 = [["a", "b", "c", "d"],["e", "f", "g", "h"], ["i", "j", "k", "l"], ["m", "n", "o", "p"]];
-rotate(image);
-console.log(image);
+rotate(image2);
+console.log(image2);
