@@ -31,6 +31,18 @@ class maxHeap {
 		return true;
 	}
 	
+	public boolean toss(int key){
+		if(size == max)
+			return false;
+		arr[size++] = new Node(key);
+		return true;
+	}
+	
+	public void restoreHeap(){
+		for(int i=size/2-1; i>=0; i--)
+			trickleDown(i);
+	}
+	
 	public void trickleUp(int index){
 		Node bottom = arr[index];
 		int parent = (index - 1) / 2;
@@ -82,12 +94,20 @@ class maxHeap {
 	
 	public static void main(String[] args) {
 		maxHeap h = new maxHeap(8);
-		h.insert(3);
-		h.insert(21);
-		h.insert(55);
-		h.insert(1);
-		h.insert(200);
-		h.insert(512);
+//		h.insert(3);
+//		h.insert(21);
+//		h.insert(55);
+//		h.insert(1);
+//		h.insert(200);
+//		h.insert(512);
+
+		h.toss(3);
+		h.toss(21);
+		h.toss(55);
+		h.toss(1);
+		h.toss(200);
+		h.toss(512);
+		h.restoreHeap();
 		
 		System.out.println(h.max().get());
 		

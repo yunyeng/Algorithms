@@ -24,16 +24,28 @@ class ParkingLot {
 		}
 	}
 	
-	class floor {
-		
+	class Floor {
+		int number;
+		int rows;
+		int capacity;
+		public Floor(int n, int r, int c){
+			this.number = n;
+			this.rows = r;
+			this.capacity = c;
+		}
 	}
 	
 	int capacity = 200;
+	int floors = 5;
 	int firstFree = 0;
 	
 	ArrayList<Boolean> spaces = new ArrayList<Boolean>();
 	
 	public ParkingLot(){
+		Floor f1 = new Floor(1, 5, 100);
+		Floor f2 = new Floor(2, 4, 80);
+		Floor f3 = new Floor(3, 3, 60);
+		Floor f4 = new Floor(4, 3, 60);
 		for(int i=0; i<capacity; i++) spaces.add(true);
 	}
 	
@@ -42,20 +54,26 @@ class ParkingLot {
 		return true;
 	}
 	
-	public boolean park(Vehicle v){
-		if(!isFull() && spaces.get(firstFree) == true){
-			spaces.set(firstFree, false);
-			firstFree++;
-			return true;
+	public boolean park(String t){
+		Vehicle v = new Vehicle(t);
+		if(!isFull()){
+			if(isEmpty(firstFree, firstFree + v.spaces)){
+				for(int i=firstFree; i<firstFree+v.spaces; i++) spaces.set(i, false);
+				firstFree += v.spaces;	
+				return true;
+			}
 		}
 		return false;
 	}
 	
-	public boolean isEmpty(int i){
-		return spaces.get(i);
+	public boolean isEmpty(int i, int j){
+		for(int index=i; index<j; index++) if(spaces.get(index) == false) return false;
+		return true;
 	}
 	
 	public static void main(String[] args) {
 		ParkingLot p = new ParkingLot();
+		System.out.println(p.park("Car"));
+		System.out.println(p.spaces.get(1));
 	}
 }

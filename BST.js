@@ -7,6 +7,7 @@ function Node(key){
 function BST(){
 	this.root = null;
 	this.length = 0;
+	this.height = 0;
 	this.search = search;
 	this.insert = insert;
 	this.transplant = transplant;
@@ -19,8 +20,7 @@ function BST(){
 	this.inOrder = inOrder;
 	this.postOrder = postOrder;
 }
-function search(key){
-	var x = this.root;
+function search(x, key){
 	if(x == null || key == x.key) return x;
 	if(key < x.key)	return this.search(x.left, key);
 	else				return this.search(x.right, key);
@@ -80,8 +80,8 @@ function insert(key){
 		var y = null;
 		while(x != null){
 			y = x;
-			if(key < x.key) x = x.left;
-			else			  x = x.right;
+			if(key < x.key)	x = x.left;
+			else	x = x.right;
 		}
 		newNode.parent = y;
 		if(y == null) 		 this.root = newNode;
@@ -112,5 +112,6 @@ function remove(key){
 		y.left.parent = y;
 	}
 }
+
 
 module.exports = BST;

@@ -17,4 +17,4 @@ function houseOfCards(floors){
 }
 
 console.log(houseOfCards(1)); // 7
-console.log(houseOfCards(6)); // 26
+console.log(houseOfCards(12)); // 26

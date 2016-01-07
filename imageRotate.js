@@ -1,13 +1,12 @@
 function rotate(image){
-	var ROWS = image.length;
-	var COLS = image[0].length;
-	for(var row=0; row<Math.floor(ROWS/2); row++){
-		for(var col=row; col<COLS-row-1; col++){
-			var top = image[row][col];
-			image[row][col] = image[ROWS-col-1][row];
-			image[ROWS-col-1][row] = image[ROWS-row-1][ROWS-col-1];
-			image[ROWS-row-1][ROWS-col-1] = image[col][ROWS-row-1];
-			image[col][ROWS-row-1] = top;
+	var n = image.length;
+	for(var out=0; out<Math.floor(n/2); out++){
+		for(var ins=out; ins<n-out-1; ins++){
+			var top = image[out][ins];
+			image[out][ins] = image[n-ins-1][out];
+			image[n-ins-1][out] = image[n-out-1][n-ins-1];
+			image[n-out-1][n-ins-1] = image[ins][n-out-1];
+			image[ins][n-out-1] = top;
 		}
 	}
 }

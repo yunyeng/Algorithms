@@ -25,12 +25,12 @@ function enqueue(key){
 	this.tail.prev = newNode;
 }
 function dequeue(){
-	if(!this.empty){
+	if(!this.empty()){
 		var node = this.head.next;
 		this.length--;
 		this.head.next = this.head.next.next;
 		this.head.next.prev = this.head;
-		return node.key;
+		return node.key;	
 	}
 	return false;
 }
@@ -43,7 +43,7 @@ function back(){
 	return false;
 }
 function empty(){
-	if(this.head.next == this.tail) return true;
+	if(this.length == 0) return true;
 	else return false;
 }
 function toString(){

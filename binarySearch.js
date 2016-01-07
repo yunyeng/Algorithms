@@ -22,3 +22,5 @@ function binarySearch(array, target){
 
 var arr = [0, 2, 4, 12, 21, 88, 101, 128, 144, 255];
 console.log(binarySearch(arr, 252));
+
+module.exports = binarySearch;

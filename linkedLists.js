@@ -1,4 +1,3 @@
-
 function Node(key){
 	this.key = key;
 	this.next = null;
@@ -16,9 +15,9 @@ function LLists(){
 function insert(key){
 	var newNode = new Node(key);
 	var currNode = this.head;
+	this.length++;
 	while(currNode.next != null){
 		currNode = currNode.next;
-		this.length++;
 	}
 	newNode.next = currNode.next;
 	currNode.next = newNode;
@@ -27,6 +26,7 @@ function insert(key){
 function insertAfter(key, after){
 	var newNode = new Node(key);
 	var currNode = this.find(after);
+	this.length++;
 	newNode.next = currNode.next;
 	currNode.next = newNode;
 	newNode.prev = currNode;

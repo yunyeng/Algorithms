@@ -7,7 +7,7 @@ function quickSort(array, p, r){
 	if(p < r){
 		var q = partition(array, p, r);
 		quickSort(array, p, q-1);
-		quickSort(array, p+1, r);
+		quickSort(array, q+1, r);
 	}
 }
 function partition(array, p, r){
