@@ -1,17 +1,20 @@
 class Graph {
 	
 	private int maxVerts;
+	private int nVisited;
 	private final int INFINITY = 9999999;
 	
 	private Vertex[] vertexList;
 	public Vertex[] sortedVer;
+	private DistPar[] sPath;
 	
 	private int[][] adjMat;
 	private int nVerts;
+	private Heap h;
+	
+	public DistPar[][] distances;
 	
 	private boolean directed;
-	
-	private Heap h;
 	
 	public Graph(int n, boolean d){
 		directed = d;
@@ -20,10 +23,15 @@ class Graph {
 		h = new Heap(n);
 		vertexList = new Vertex[n];
 		adjMat = new int[n][n];
-		for(int i=0; i<n; i++)
-			for(int j=0; j<n; j++)
+		distances = new DistPar[n][n];
+		for(int i=0; i<n; i++){
+			for(int j=0; j<n; j++){
 				adjMat[i][j] = INFINITY;
+				distances[i][j] = new DistPar(INFINITY, j);
+			}
+		}
 		sortedVer = new Vertex[n];
+		sPath = new DistPar[n];
 	}
 	
 	public void addVertex(String s){
@@ -44,6 +52,70 @@ class Graph {
 	
 	public void displayVertex(int v){
 		System.out.print(vertexList[v].name);
+	}
+	
+	public void path(int s){
+		vertexList[s].visited = true;
+		nVisited++;
+		for(int i=0; i<nVerts; i++)
+			sPath[i] = new DistPar(adjMat[s][i], s);
+		while(nVisited < nVerts){
+			int indexMin = getMin();
+			int minDist = sPath[indexMin].distance;
+			if(minDist == INFINITY){
+				System.out.println("There are unreachable vertices!");
+				break;
+			}
+			vertexList[indexMin].visited = true;
+			nVisited++;
+			adjustPaths(indexMin, minDist, s);
+		}
+		displayPaths(s);
+		nVisited = 0;
+		resetFlags();
+	}
+	
+	public int getMin(){
+		int minDist  = INFINITY;
+		int indexMin = 0;
+		for(int i=0; i<nVerts; i++){
+			if(i != sPath[i].parent && !vertexList[i].visited && sPath[i].distance < minDist){
+				minDist  = sPath[i].distance;
+				indexMin = i;
+			}
+		}
+		return indexMin;
+	}
+	
+	public void adjustPaths(int current, int startToCurrent, int s){
+		int column = 0;
+		while(column < nVerts){
+			if(column == s){
+				column++;
+				continue;
+			}
+			int currentToFringe = adjMat[current][column];
+			int startToFringe   = startToCurrent + currentToFringe;
+			int sPathDist       = sPath[column].distance;
+			if(startToFringe < sPathDist){
+				sPath[column].parent   = current;
+				sPath[column].distance = startToFringe;
+			}
+			column++;
+		}
+	}
+	
+	public void displayPaths(int j){
+		for(int i=0; i<nVerts; i++){
+			System.out.print(vertexList[i].name + " = ");
+			distances[j][i] = sPath[i];
+			if(sPath[i].distance == INFINITY)
+				System.out.print("inf");
+			else
+				System.out.print(sPath[i].distance);
+			System.out.print("("+vertexList[sPath[i].parent].name+") ");
+		}
+		System.out.println();
 	}
 	
 	public void dfs(int start){
@@ -173,10 +245,9 @@ class Graph {
 	// Minimum Spanning Tree with Weights
 	public void minSpanTreeW(){
 		int current = 0;
-		int nFlagged = 0;
-		while(nFlagged < nVerts - 1){
+		while(nVisited < nVerts - 1){
 			vertexList[current].visited = true;
-			nFlagged++;
+			nVisited++;
 			for(int i=0; i<nVerts; i++){
 				if(i == current)
 					continue;
@@ -212,6 +283,39 @@ class Graph {
 				h.remove(index);
 				h.insert(new Edge(c, newVert, newDist));
 			}
+		}
+	}
+	
+	public void floyds(){
+		for(int i=0; i<nVerts; i++){
+			path(i);
+		}
+		
+		for(int row=0; row<nVerts; row++){
+			for(int col=0; col<nVerts; col++){
+				if(distances[row][col].distance < INFINITY){
+					for(int z=0; z<nVerts; z++){
+						if(z != col){
+							if(distances[z][col].distance == INFINITY || 
+							  (distances[z][row].distance + distances[row][col].distance) < distances[z][col].distance){
+								distances[z][col].distance = distances[z][row].distance + distances[row][col].distance;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
+		for(int i=0; i<nVerts; i++){
+			for(int j=0; j<nVerts; j++){
+				if(distances[i][j].distance == INFINITY)
+					System.out.print(" - ");
+				else 
+					System.out.print(distances[i][j].distance + "  ");
+			}
+			System.out.println();
 		}
 	}
 	
@@ -257,25 +361,72 @@ class Graph {
 //		
 //		g.minSpanTree();
 
-		Graph g = new Graph(8, true);
-		g.addVertex("A"); // 0
-		g.addVertex("B"); // 1
-		g.addVertex("C"); // 2
-		g.addVertex("D"); // 3
+//		Graph g = new Graph(8, true);
+//		g.addVertex("A"); // 0
+//		g.addVertex("B"); // 1
+//		g.addVertex("C"); // 2
+//		g.addVertex("D"); // 3
+//		g.addVertex("E"); // 4
+//		g.addVertex("F"); // 5
+//		g.addVertex("G"); // 6
+//		g.addVertex("H"); // 7
+//		
+//		g.addEdge(0, 3);
+//		g.addEdge(0, 4);
+//		g.addEdge(1, 4);
+//		g.addEdge(2, 5);
+//		g.addEdge(3, 6);
+//		g.addEdge(4, 6);
+//		g.addEdge(5, 7);
+//		g.addEdge(6, 7);
+//		
+//		g.topoSort();
+
+//		Graph g = new Graph(9, true);
+//		g.addVertex("San Francisco");   // 0
+//		g.addVertex("Los Angeles");     // 1
+//		g.addVertex("San Diego");       // 2
+//		g.addVertex("Santa Barbara");   // 3
+//		g.addVertex("San Luis Obispo"); // 4
+//		g.addVertex("Santa Cruz");      // 5
+//		g.addVertex("Monterey");        // 6
+//		g.addVertex("Napa Valley");     // 7
+//		g.addVertex("San Jose");        // 8
+//		
+//		g.addEdge(0, 1, 383);
+//		g.addEdge(0, 3, 325);
+//		g.addEdge(0, 4, 231);
+//		g.addEdge(0, 5, 73);
+//		g.addEdge(0, 7, 59);
+//		g.addEdge(0, 8, 48);
+//		g.addEdge(1, 2, 120);
+//		g.addEdge(1, 7, 412);
+//		g.addEdge(3, 2, 215);
+//		g.addEdge(3, 1, 95);
+//		g.addEdge(4, 3, 95);
+//		g.addEdge(8, 5, 42);
+//		g.addEdge(8, 7, 98);
+//		
+//		g.path(0);
+
+		Graph g = new Graph(5, true);
+		g.addVertex("A");   // 0
+		g.addVertex("B");     // 1
+		g.addVertex("C");       // 2
+		g.addVertex("D");   // 3
 		g.addVertex("E"); // 4
-		g.addVertex("F"); // 5
-		g.addVertex("G"); // 6
-		g.addVertex("H"); // 7
 		
-		g.addEdge(0, 3);
-		g.addEdge(0, 4);
-		g.addEdge(1, 4);
-		g.addEdge(2, 5);
-		g.addEdge(3, 6);
-		g.addEdge(4, 6);
-		g.addEdge(5, 7);
-		g.addEdge(6, 7);
+		g.addEdge(0, 1, 30);
+		g.addEdge(0, 3, 80);
+		g.addEdge(1, 2, 60);
+		g.addEdge(1, 3, 90);
+		g.addEdge(2, 4, 40);
+		g.addEdge(3, 2, 20);
+		g.addEdge(3, 4, 70);
+		g.addEdge(4, 1, 50);
 		
-		g.topoSort();
+//		g.path(0);
+		g.floyds();
+
 	}
 }
