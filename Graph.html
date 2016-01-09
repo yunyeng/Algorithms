@@ -1,0 +1,129 @@
+<script>
+function Node(key){
+	this.key = key;
+	this.next = null;
+	this.prev = null;
+}
+function Queue(){
+	this.head = new Node("head");
+	this.tail = new Node("tail");
+	this.head.next = this.tail;
+	this.tail.prev = this.head;
+	this.enqueue = enqueue;
+	this.dequeue = dequeue;
+	this.front = front;
+	this.back = back;
+	this.empty = empty;
+	this.length = 0;
+	this.toString = toString;
+}
+function enqueue(key){
+	var newNode = new Node(key);
+	this.length++;
+	this.tail.prev.next = newNode;
+	newNode.prev = this.tail.prev;
+	newNode.next = this.tail;
+	this.tail.prev = newNode;
+}
+function dequeue(){
+	if(!this.empty){
+		var node = this.head.next;
+		this.length--;
+		this.head.next = this.head.next.next;
+		this.head.next.prev = this.head;
+		return node.key;
+	}
+	return false;
+}
+function front(){
+	if(!this.empty()) return this.head.next;
+	return false;
+}
+function back(){
+	if(!this.empty()) return this.tail.prev;
+	return false;
+}
+function empty(){
+	if(this.head.next == this.tail) return true;
+	else return false;
+}
+function toString(){
+	if(!this.empty()){
+		var currNode = this.head.next;
+		var result = "";
+		while(currNode.next != null){
+			result += currNode.key + "\n";
+			currNode = currNode.next;
+		}
+		return result;
+	}
+	return false;
+}
+function Vertex(label){
+	this.label = label;
+	this.d = Number.POSITIVE_INFINITY;
+	this.c = "WHITE";
+	this.p = null;
+}
+function Graph(v){
+	this.vertices = v;
+	this.edges = 0;
+	this.adj = [];
+	this.vertex = [];
+	for(var i=0; i<this.vertices; i++){
+		this.vertex.push(new Vertex(i));
+		this.adj[i] = [];
+	}
+	this.addEdge = addEdge;
+	this.bfs = bfs;
+	this.show = show;
+}
+function addEdge(v,w){
+	this.adj[v].push(w);
+	this.adj[w].push(v);
+	this.edges++;
+}
+function show(){
+	var result = "";
+	for (var i = 0; i < this.vertices; ++i){
+		result += i + " -> "; 
+		for (var j = 0; j < this.vertices; ++j){
+			if (this.adj[i][j] != undefined) result += this.adj[ i][ j] + ' ';
+		}
+		result += '\n';
+	}
+	return result;
+}
+function bfs(s){
+	s.c = "GRAY";
+	s.d = 0;
+	var Q = new Queue();
+	Q.enqueue(s);
+	while(!Q.empty()){
+		var u = Q.dequeue();
+		for(var v of this.adj[u.label]){
+			if(v.c == "WHITE"){
+				v.c = "GRAY";
+				v.d = u.d + 1;
+				v.p = u;
+				Q.enqueue(v);
+			}
+		}
+		u.c = "BLACK";
+	}
+}
+
+
+var g = new Graph(5);
+g.addEdge(0,1);
+g.addEdge(0,2);
+g.addEdge(1,3);
+g.addEdge(2,4);
+
+var a =new Vertex(0);
+
+g.bfs(a);
+
+console.log(g.show());
+
+</script>
