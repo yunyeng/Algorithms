@@ -49,15 +49,19 @@ class KnightsTour {
 			return false;
 		int xPos = Math.abs(v1.x - v2.x);
 		int yPos = Math.abs(v1.y - v2.y);
-		if(xPos > 2 || xPos < 1 || yPos > 2 || yPos < 1)
+		
+		if(!(xPos == 2 && yPos == 1) && !(xPos == 1 && yPos == 2))
 			return false;
-		if(v2.visited)
-			return false;
+		
+//		if(xPos > 2 || xPos < 1 || yPos > 2 || yPos < 1)
+//			return false;
+//		if(v2.visited)
+//			return false;
 		return true;
 	}
 	
 	public int firstLegitMove(int v){
-		for(int i=0; i<n * n; i++){
+		for(int i=0; i<(n * n); i++){
 			if(adjMatrix[v][i] == 1 && !vertexList[i].visited){
 				return i;
 			}
@@ -70,12 +74,13 @@ class KnightsTour {
 		Stack<Integer> s = new Stack<Integer>();
 		s.push(i);
 		while(!s.empty()){
-			System.out.println(s.length);
+			System.out.print(s.length + " ");
 			if(s.length == vertexList.length){
 				System.out.print("WIN");
 				return;
 			}
 			int v = firstLegitMove((int) s.peek().key);
+//			System.out.println(s.peek().key);
 //			System.out.println(v);
 			if(v == -1){
 				s.pop();
@@ -84,14 +89,31 @@ class KnightsTour {
 				s.push(v);
 			}
 		}
+		resetFlags();
+	}
+	
+	public void resetFlags(){
+		for(int i=0; i<vertexList.length; i++)
+			vertexList[i].visited = false;
 	}
 	
 	public static void main(String[] args) {
 		int n = 8;
 		KnightsTour k = new KnightsTour(n);
 //		k.dfs(4);
-		for(int i=0; i < n * n; i++)
+		for(int i=0; i < n * n; i++){
 			k.dfs(i);
-//			System.out.println(k.vertexList[i].x+", "+k.vertexList[i].y);
+			System.out.println();
+			System.out.println();
+		}
+//		for(int i=0; i<64; i++)
+//		System.out.println(k.vertexList[0].x + " " + k.vertexList[0].y);
+//		System.out.println(k.vertexList[6].x + " " + k.vertexList[6].y);
+//		for(int i=0; i<n * n; i++){
+//			for(int j=0; j<n*n; j++){
+//				System.out.print(k.adjMatrix[i][j] + " ");
+//			}
+//			System.out.println();
+//		}
 	}
 }

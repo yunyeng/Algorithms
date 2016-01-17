@@ -3,33 +3,46 @@ class LLists<Item> {
 	class Node<Item> {
 		public Item key;
 		public Node next;
-		public Node prev;
+//		public Node prev;
 		public Node(Item key){
 			this.key = key;
 		}
 	}
 	
-	Node<Integer> head = new Node<Integer>(0);
-	Node<Integer> tail = new Node<Integer>(0);
+	Node head;
+	Node tail;
 	int length = 0;
 	
 	public LLists(){
-		this.head.next = this.tail;
-		this.tail.prev = this.head;
+		head = null;
+		tail = null;
+	}
+	
+	public LLists.Node newNode(){
+		return new Node(null);
 	}
 	
 	public void insert(Item key){
 		Node newNode = new Node(key);
-		this.tail.prev.next = newNode;
-		newNode.prev = this.tail.prev;
-		this.tail.prev = newNode;
-		newNode.next = this.tail;
+		if(head == null){
+			head = newNode;
+		} else if(tail == null){
+			tail = newNode;
+			head.next = tail;
+//			tail.prev = head;
+		} else {
+			tail.next = newNode;
+//			newNode.prev = tail;
+			tail = newNode;
+		}
 	}
 	
 	public Node find(Item key){
 		Node node = this.head;
 		while(node.key != key){
 			node = node.next;
+			if(node == null)
+				break;
 		}
 		return node;
 	}
@@ -37,18 +50,45 @@ class LLists<Item> {
 	public void insertAfter(Item key, Item after){
 		Node currNode = this.find(after);
 		Node newNode = new Node(key);
-		currNode.next.prev = newNode;
+//		currNode.next.prev = newNode;
 		newNode.next = currNode.next;
 		currNode.next = newNode;
-		newNode.prev = currNode;
+//		newNode.prev = currNode;
+	}
+	
+	public void insertBegin(Item key){
+		Node newNode = new Node(key);
+//		head.prev = newNode;
+		newNode.next = head;
+		head = newNode;
+	}
+	
+	public void insertEnd(Item key){
+		Node newNode = new Node(key);		tail.next = newNode;
+//		newNode.prev = tail.prev;
+		tail = newNode;
 	}
 	
 	public void remove(Item key){
 		Node node = this.find(key);
-		node.prev.next = node.next;
-		node.next.prev = node.prev;
-		node.next = null;
-		node.prev = null;
+		node.key = node.next.key;
+		node.next = node.next.next;
+//		node.prev.next = node.next;
+//		node.next.prev = node.prev;
+//		node.next = null;
+//		node.prev = null;
+	}
+	
+//	public void removeEnd(){
+//		Node node = tail;
+////		node.prev.next = null;
+////		tail = node.prev;
+//	}
+	
+	public void removeBegin(){
+		Node node = head;
+//		node.next.prev = null;
+		head = node.next;
 	}
 	
 	public String show(){
@@ -62,12 +102,6 @@ class LLists<Item> {
 	}
 	
 	public static void main(String[] args){
-		LLists ll = new LLists();
-		ll.insert("Bok");
-		ll.insert("Cis");
-		ll.insert("Sidik");
-		ll.insert("Kaka");
-		System.out.println(ll.head.next.next.key);
 	}
 	
 }
