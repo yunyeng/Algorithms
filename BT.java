@@ -1,21 +1,13 @@
-import java.util.*;
-class BST <T extends Comparable<T>>{
-	
+class BT {
 	public class Node {
 		T key;
 		Node parent = null;
 		Node right = null;
 		Node left = null;
-		int size;
 		public Node(T key){
 			this.key = key;
 		}
-		public Node(T key, int s){
-			this.key = key;
-			size = s;
-		}
 	}
-	
 	
 	Node root = null;
 	int length = 0;
@@ -39,14 +31,7 @@ class BST <T extends Comparable<T>>{
 		}
 		this.length++;
 	}
-		
-	public Node newNode(T key){
-		return new Node(key);
-	}
-	public Node newNode(T key, int s){
-		return new Node(key, s);
-	}
-		
+	
 	public void insertNode(Node current, Node node){
 		int cmp = node.key.compareTo(current.key);
 		if(cmp < 0){
@@ -77,33 +62,6 @@ class BST <T extends Comparable<T>>{
 			}
 		}
 		return n;
-	}
-	
-	public Node minimum(Node x){
-		while(x.left != null) x = x.left;
-		return x;
-	}
-	public Node maximum(Node x){
-		while(x.right != null) x = x.right;
-		return x;
-	}
-	public Node successor(Node x){
-		if(x.right != null) return this.minimum(x.right);
-		Node p = x.parent;
-		while(p != null && x == p.right){
-			x = p;
-			p = p.parent;
-		}
-		return p;
-	}
-	public Node predecessor(Node x){
-		if(x.left != null) return this.maximum(x.left);
-		Node p = x.parent;
-		while(p != null && x == p.left){
-			x = p;
-			p = p.parent;
-		}
-		return p;
 	}
 	
 	public boolean contains(Node r, T key){
@@ -158,22 +116,6 @@ class BST <T extends Comparable<T>>{
 		return true;
 	}
 	
-	public T findMin(){
-		Node r = this.root;
-		while(r.left != null){
-			r = r.left;
-		}
-		return r.key;
-	}
-	
-	public T findMax(){
-		Node r = this.root;
-		while(r.right != null){
-			r = r.right;
-		}
-		return r.key;
-	}
-	
 	public void preOrder(Node r){
 		if(r != null){
 			System.out.println(r.key);
@@ -200,12 +142,12 @@ class BST <T extends Comparable<T>>{
 	
 	
 	public void breadthFirst(Node r){
-		Queue<Node> Q = new Queue<Node>();
+		Queue<Node> Q = new LinkedList<Node>();
 		while(r != null){
 			System.out.println(r.key);
-			if(r.left != null)	Q.enqueue(r.left);
-			if(r.right != null)	Q.enqueue(r.right);
-			if(!Q.isEmpty())	r = Q.dequeue();
+			if(r.left != null)	Q.add(r.left);
+			if(r.right != null)	Q.add(r.right);
+			if(!Q.isEmpty())	r = Q.remove();
 			else            r = null;
 		}
 	}
@@ -243,60 +185,6 @@ class BST <T extends Comparable<T>>{
 	}
 	
 	public static void main(String[] args) {
-		/*
-		b.insert(3);
-		b.insert(5);
-		b.insert(7);
-		b.insert(1);
-		b.insert(8);
-		b.insert(12);
-		*/
 		
-		ArrayList<Integer> hop = new ArrayList<Integer>() {{
-			add(3);
-			add(5);
-			add(6);
-			add(10);
-			add(21);
-			add(33);
-			add(45);
-			add(46);
-			add(50);
-			add(60);
-			add(72);
-			add(98);
-			add(201);
-			add(300);
-		}};
-		//3, 5, 6, 10, 21, 33, 45, 46, 50, 60, 72, 98, 201, 300
-		//int[] hop = {};
-		BST<Integer> b = new BST<Integer>();
-		
-		b.minHeight(hop, 0, hop.size()-1);
-		
-		//System.out.println(b.findMax());
-		
-		//b.inOrder(b.root);
-		//System.out.println(b.isBinary());
-		
-		//System.out.println(b.predecessor(b.root.right.right).key);
-		
-		//b.collect(b.root, ar);
-		
-		
-		//System.out.println(b.root.right.right.right.right.key);
-		
-		//System.out.println(b.height(b.root));
-		
-		//b.breadthFirst(b.root);
-		
-		//System.out.println(b.root.right.right.right.parent.key);
-		//System.out.println(b.contains(b.root, 4));
-		
-		//System.out.println(b.findNode(5).right.key);
-		//System.out.println(b.length);
-		//b.remove(8);
-		//System.out.println(b.root.right.right.right.key);
-		//System.out.println(b.length);
 	}
 }

@@ -1,5 +1,5 @@
 import java.util.*;
-class Deque<Item> {
+class Deque<Item>{
 	
 	class Node<Item>{
 		Item key;
@@ -37,28 +37,28 @@ class Deque<Item> {
 		length++;
 	}
 	
-	public Node dequeueFront(){
+	public Item dequeueFront(){
 		Node node = this.head.next;
 		this.head.next = this.head.next.next;
 		this.head.next.prev = this.head;
 		length--;
-		return node;
+		return (Item) node.key;
 	}
 	
-	public Node dequeueBack(){
+	public Item dequeueBack(){
 		Node node = this.tail.prev;
 		this.tail.prev = this.tail.prev.prev;
 		this.tail.prev.next = this.tail;
 		length--;	
-		return node;
+		return (Item) node.key;
 	}
 	
-	public Node peekFront(){
-		return this.head.next;
+	public Item peekFront(){
+		return (Item) this.head.next.key;
 	}
 	
-	public Node peekBack(){
-		return this.tail.prev;
+	public Item peekBack(){
+		return (Item) this.tail.prev.key;
 	}
 	
 	public boolean isEmpty(){
@@ -67,18 +67,6 @@ class Deque<Item> {
 	
 	public static void main(String[] args) {
 		
-		Deque<String> d = new Deque<String>();
 		
-		d.enqueueFront("Kamil");
-		d.enqueueFront("Murtaza");
-		d.enqueueFront("Nurullah");
-		d.enqueueBack("Yunus");
-		d.enqueueBack("Mahmut");
-		d.enqueueBack("Abdullah");
-		d.enqueueBack("Kadir");
-		
-		System.out.println(d.length);
-		
-		System.out.println(d.peekBack().key);
 	}
 }

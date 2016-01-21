@@ -9,36 +9,56 @@ class Queue<Item>{
 		}
 	}
 	
-	Node<String> head = new Node<String>("head");
-	Node<String> tail = new Node<String>("tail");
+	Node head;
+	Node tail;
+	int length;
 	
 	public Queue(){
-		this.head.next = this.tail;
-		this.tail.prev = this.head;
+		head = null;
+		tail = null;
+		length = 0;
 	}
 	
-	public boolean enqueue(Item key){
+	public Item front(){
+		return (Item) head.key;
+	}
+	
+	public Item back(){
+		return (Item) tail.key;
+	}
+	
+	public boolean isEmpty(){
+		return head == null;
+	}
+	
+	public Item enqueue(Item key){
 		Node n = new Node(key);
-		this.tail.prev.next = n;
-		n.prev = this.tail.prev;
-		n.next = this.tail;
-		this.tail.prev = n;
-		return true;
+		if(head == null){
+			head = n;
+			tail = head;
+		} else {
+			n.prev = tail.prev;
+			tail.next = n;
+			tail = n;
+		}
+		return (Item) n.key;
 	}
 	
-	public boolean dequeue(){
-		if(this.head.next != this.tail){
-			this.head.next = this.head.next.next;
-			this.head.next.prev = this.head;
-			return true;
+	public Item dequeue(){
+		if(!isEmpty()){
+			Item temp = (Item) head.key;
+			head = head.next;
+//			head.next.prev = head;
+			length--;
+			return temp;
 		}
-		return false;
+		return null;
 	}
 	
 	public void print(){
 		Node n = this.head;
 		n = n.next;
-		while(n != this.tail){
+		while(n != tail){
 			System.out.print(n.key + ", ");
 			n = n.next;
 		}

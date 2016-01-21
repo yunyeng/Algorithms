@@ -1,13 +1,14 @@
+import java.util.*;
 class LLQs {
 	
-	public static LLists.Node reverse(LLists.Node head){
-		if(head == null || head.next == null)
-			return head;
-		LLists.Node n = reverse(head.next);
-		head.next.next = head;
-		head.next = null;
-		return n;
-	}
+//	public static LLists.Node reverse(LLists.Node head){
+//		if(head == null || head.next == null)
+//			return head;
+//		LLists.Node n = reverse(head.next);
+//		head.next.next = head;
+//		head.next = null;
+//		return n;
+//	}
 	
 	public static LLists.Node reverse(LLists.Node head, int s, int f){
 			if(head == null || s == f)
@@ -18,16 +19,34 @@ class LLQs {
 			return n;
 		}
 	
-	public static LLists reverse(LLists ll, int s, int f){
-			int a = 1;
-			LLists.Node n = ll.head, c = null;
-			while(a != s && n != null){
-				c = n;
-				n = n.next;
-				a++;
+//	public static LLists reverse(LLists ll, int s, int f){
+//			int a = 1;
+//			LLists.Node n = ll.head, c = null;
+//			while(a != s && n != null){
+//				c = n;
+//				n = n.next;
+//				a++;
+//			}
+//			c.next = reverse(n, s, f);
+//			return ll;
+//	}
+
+	public static int mostFrequent(int[] arr){
+		HashMap<Integer, Integer> h = new HashMap<>();
+		int count = 1;
+		int maxInd = 0;
+		for(int i=0; i<arr.length; i++){
+			if(h.get(arr[i]) ==  null){
+				h.put(arr[i], 1);
+			} else {
+				h.put(arr[i], h.get(arr[i])+1);
+				if(h.get(arr[i]) > count){
+					count = 	h.get(arr[i]);
+					maxInd = arr[i];
+				}
 			}
-			c.next = reverse(n, s, f);
-			return ll;
+		}
+		return maxInd;
 	}
 	
 	public static LLists.Node reverseLoop(LLists.Node head){
@@ -61,6 +80,17 @@ class LLQs {
 			h2 = h2.next;
 		}
 		return newList;
+	}
+	
+	public static LLists.Node reverse(LLists.Node r){
+		LLists.Node curr = r;
+		LLists.Node next = curr.next;
+		while(next != null){
+			next = curr.next;
+			curr.next.next = curr;
+			curr = next;
+		}
+		return curr;
 	}
 	
 	public static LLists.Node overlap(LLists a, LLists b){
@@ -224,24 +254,37 @@ class LLQs {
 		return minInd;
 	}
 	
+	
+	public static int fibonacci(int n){
+		if(n <= 1)
+			return n;
+		else
+			return fibonacci(n - 1) + fibonacci(n - 2);
+	}
+	
 	public static void main(String[] args) {
 		
-		int[] arr = {3, 5, 8, 10, 2, 1, 100, 92, 13, 24, 55, 250};
-		System.out.println(closestInt(arr, 90.2));
+		int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15};
+		missing2(arr);
+//		System.out.println(closestInt(arr, 90.2));
+
+//		System.out.println(fibonacci(10));
 		
-//		LLists<Integer> ll = new LLists<>();
+		LLists<Integer> ll = new LLists<>();
 //		LLists<Integer> ll2 = new LLists<>();
 //		ll2.insert(4);
 //		ll2.insert(1);
-//		ll.insert(2);
-//		ll.insert(3);
-//		ll.insert(5);
-//		ll.insert(7);
-//		ll.insert(11);
-//		ll.insert(17);
-//		ll.insert(21);
-//		ll.insert(32);
-//		ll.insert(33);
+		ll.insert(2);
+		ll.insert(3);
+		ll.insert(5);
+		ll.insert(7);
+		ll.insert(11);
+		ll.insert(17);
+		ll.insert(21);
+		ll.insert(32);
+		ll.insert(33);
+//		reverse(ll.head);
+//		System.out.println(ll.head.key);
 //		oddEvenMerge(ll);
 //		System.out.println(ll.head.next.next.next.next.next.next.next.next.next.key);
 //		ll2.find(1).next = ll.find(32);
@@ -259,6 +302,9 @@ class LLQs {
 //		System.out.println(overlap(ll, ll2).key);
 //		ll.head = shiftByK(ll.head, 3);
 //		System.out.println(ll.head.next.next.next.key);
+		
+//		int[] frequency = {3, 5, 61, 24, 24, 24, 24, 3, 18, 24, 18, 3, 44, 18, 41, 18, 55, 24, 3, 12, 98, 100, 101, 100, 3, 24, 18, 18};
+//		System.out.println(mostFrequent(frequency));
 		
 //		ll = reverse(ll, 4, 7);
 //		System.out.print(ll.head.next.next.next.next.next.next.next.key);

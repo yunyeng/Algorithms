@@ -1,11 +1,11 @@
 class Stack<Item> {
 
-	class Node<Item>{
+	public class Node<Item>{
 		Item key;
 		Node next;
 		Node prev;
 		public Node(Item key){
-			this.key = key;
+			this.key = (Item) key;
 		}
 	}
 	
@@ -16,6 +16,14 @@ class Stack<Item> {
 	public Stack(){
 		this.head.next = this.tail;
 		this.tail.prev = this.head;
+	}
+	
+	public Node head(){
+		return head.next;
+	}
+	
+	public Node tail(){
+		return tail;
 	}
 	
 	public void push(Item key){
@@ -37,6 +45,10 @@ class Stack<Item> {
 	
 	public Node peek(){
 		return this.tail.prev;
+	}
+	
+	public boolean isEmpty(){
+		return this.head.next == this.tail;
 	}
 	
 	public boolean empty(){
