@@ -9,6 +9,10 @@ class LLQs {
 //		head.next = null;
 //		return n;
 //	}
+
+	public static int kthLargest(int[] arr, int k){
+		
+	}
 	
 	public static LLists.Node reverse(LLists.Node head, int s, int f){
 			if(head == null || s == f)
