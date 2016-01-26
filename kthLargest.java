@@ -116,6 +116,15 @@ class kthLargest {
 			System.out.print(a[i]+" ");
 	}
 	
+	public static void removeConsDups(char[] s){
+		for(int i=1; i<s.length; i++){
+			while(s[i] == s[i-1]){
+				s[i] = s[i+1];
+				i++;
+			}
+		}
+	}
+	
 	public static ArrayList<Integer> union(ArrayList<ArrayList<Integer>> input){
 		ArrayList<Integer> result = new ArrayList<>();
 		SimpleHeap mh = new SimpleHeap(input.size());
@@ -147,6 +156,8 @@ class kthLargest {
 //		System.out.println();
 //		print(arr2);
 
+		char[] 
+
 		ArrayList<ArrayList<Integer>> a = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> a1 = new ArrayList<Integer>();
 		ArrayList<Integer> a2 = new ArrayList<Integer>();
@@ -163,8 +174,8 @@ class kthLargest {
 		a.add(a2);
 		a.add(a3);
 		ArrayList<Integer> b = union(a);
-		for(int i=0; i<b.size(); i++)
-			System.out.print(b.get(i) + " ");
+//		for(int i=0; i<b.size(); i++)
+//			System.out.print(b.get(i) + " ");
 		
 //		System.out.println(largest(arr, 2));
 		int[] ordArr  = {1, 3, 5, 10, 12, 13, 14, 19, 21, 23, 29, 30, 42, 55, 61, 71, 99, 100, 200, 300};

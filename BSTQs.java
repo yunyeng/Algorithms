@@ -152,6 +152,22 @@ class BSTQs {
 		}
 	}
 	
+	public static void outOrder(BST.Node n){
+			if(n != null){
+				outOrder(n.right);
+				System.out.print(n.key+" ");
+				outOrder(n.left);
+			}
+		}
+	
+	public static void inOrder(BST.Node n, ArrayList<Integer> a){
+		if(n != null){
+			inOrder(n.left);
+			a.add((int) n.key);
+			inOrder(n.right);
+		}
+	}
+	
 	public static void inOrderLoop(BST.Node r){
 		BST.Node prev = null;
 		BST.Node n = r;
@@ -228,59 +244,63 @@ class BSTQs {
 //	
 	public static void main(String[] args) {
 		BST<Integer> b = new BST<>();
-		BST.Node n = b.newNode(12, 7);
-		BST.Node n2 = b.newNode(21, 9);
-		BST.Node n3 = b.newNode(33, 3);
-		BST.Node n4 = b.newNode(41, 3);
-		BST.Node n5 = b.newNode(50, 5);
-		BST.Node n6 = b.newNode(100, 3);
+//		BST.Node n = b.newNode(12, 7);
+//		BST.Node n2 = b.newNode(21, 9);
+//		BST.Node n3 = b.newNode(33, 3);
+//		BST.Node n4 = b.newNode(41, 3);
+//		BST.Node n5 = b.newNode(50, 5);
+//		BST.Node n6 = b.newNode(100, 3);
+//		
+//		BST.Node n7 = b.newNode(12, 1);
+//		BST.Node n8 = b.newNode(24, 1);
+//		BST.Node n9 = b.newNode(45, 2);
+//		BST.Node n10 = b.newNode(31, 4);
+//		BST.Node n11 = b.newNode(24, 2);
+//		BST.Node n12 = b.newNode(19, 1);
+//		BST.Node n13 = b.newNode(54, 2);
+//		BST.Node n14 = b.newNode(21, 1);
+//		BST.Node n15 = b.newNode(211, 1);
+//		BST.Node n16 = b.newNode(33, 1);
+//		
+//		b.root = b.newNode(4, 17);
+//		b.root.left = n;
+//		b.root.right = n2;
+//		n.left = n3;
+//		n.right = n4;
+//		n.parent = b.root;
+//		n2.parent = b.root;
+//		n2.left = n5;
+//		n2.right = n6;
+//		n3.left = n7;
+//		n3.right = n8;
+//		n3.parent = n;
+//		n4.parent = n;
+//		n4.right = n9;
+//		n5.right = n10;
+//		n5.parent = n2;
+//		n6.parent = n2;
+//		n7.parent = n3;
+//		n8.parent = n3;
+//		n9.parent = n4;
+//		n12.parent = n9;
+//		n10.parent = n5;
+//		n13.parent = n10;
+//		n14.parent = n10;
+//		n16.parent = n13;
+//		n11.parent = n6;
+//		n15.parent = n11;
+//		n6.right = n11;
+//		n9.left = n12;
+//		n10.left = n13;
+//		n10.right = n14;
+//		n11.right = n15;
+//		n13.right = n16;
 		
-		BST.Node n7 = b.newNode(12, 1);
-		BST.Node n8 = b.newNode(24, 1);
-		BST.Node n9 = b.newNode(45, 2);
-		BST.Node n10 = b.newNode(31, 4);
-		BST.Node n11 = b.newNode(24, 2);
-		BST.Node n12 = b.newNode(19, 1);
-		BST.Node n13 = b.newNode(54, 2);
-		BST.Node n14 = b.newNode(21, 1);
-		BST.Node n15 = b.newNode(211, 1);
-		BST.Node n16 = b.newNode(33, 1);
+//		System.out.print(sumToNode(b.root, n9, 0));	
 		
-		b.root = b.newNode(4, 17);
-		b.root.left = n;
-		b.root.right = n2;
-		n.left = n3;
-		n.right = n4;
-		n.parent = b.root;
-		n2.parent = b.root;
-		n2.left = n5;
-		n2.right = n6;
-		n3.left = n7;
-		n3.right = n8;
-		n3.parent = n;
-		n4.parent = n;
-		n4.right = n9;
-		n5.right = n10;
-		n5.parent = n2;
-		n6.parent = n2;
-		n7.parent = n3;
-		n8.parent = n3;
-		n9.parent = n4;
-		n12.parent = n9;
-		n10.parent = n5;
-		n13.parent = n10;
-		n14.parent = n10;
-		n16.parent = n13;
-		n11.parent = n6;
-		n15.parent = n11;
-		n6.right = n11;
-		n9.left = n12;
-		n10.left = n13;
-		n10.right = n14;
-		n11.right = n15;
-		n13.right = n16;
-		
-		System.out.print(sumToNode(b.root, n9, 0));	
+//		ArrayList<Integer> a = new ArrayList<>();
+//		for(int i=0; i<a.size(); i++)
+//			System.out.print(a.get(i) + " ");
 		
 //		System.out.println(inOrder);
 //		inOrder(b.root);
@@ -300,18 +320,19 @@ class BSTQs {
 //		for(int i=0; i<a.size(); i++)
 //			System.out.println(a.get(i));
 		
-//		b.insert(314);
-//		b.insert(200);
-//		b.insert(400);
-//		b.insert(100);
-//		b.insert(350);
-//		b.insert(500);
-//		b.insert(90);
-//		b.insert(120);
-//		b.insert(450);
-//		b.insert(600);
-//		b.insert(440);
-//		b.insert(430);
+		b.insert(314);
+		b.insert(200);
+		b.insert(400);
+		b.insert(100);
+		b.insert(350);
+		b.insert(500);
+		b.insert(90);
+		b.insert(120);
+		b.insert(450);
+		b.insert(600);
+		b.insert(440);
+		b.insert(430);
+				outOrder(b.root);
 //		System.out.println(LCA(b.root, b.root.right.left, b.root.right.right.left.left.left).key);
 	}
 }
