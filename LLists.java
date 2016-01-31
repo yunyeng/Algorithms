@@ -1,6 +1,6 @@
 class LLists<Item> {
 	
-	class Node<Item> {
+	public class Node<Item> {
 		public Item key;
 		public Node next;
 //		public Node prev;
