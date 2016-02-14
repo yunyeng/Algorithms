@@ -9,6 +9,7 @@ class BST <T extends Comparable<T>>{
 		int size;
 		public Node(T key){
 			this.key = key;
+			size = 0;
 		}
 		public Node(T key, int s){
 			this.key = key;
@@ -50,6 +51,7 @@ class BST <T extends Comparable<T>>{
 	public void insertNode(Node current, Node node){
 		int cmp = node.key.compareTo(current.key);
 		if(cmp < 0){
+			current.size++;
 			if(current.left == null){
 				current.left = node;
 				node.parent = current;
@@ -124,6 +126,7 @@ class BST <T extends Comparable<T>>{
 			int cmp = nodeToRemove.key.compareTo(parent.key);
 			if(cmp < 0){
 				parent.left = null;
+				parent.size--;
 			} else {
 				parent.right = null;
 			}
@@ -132,6 +135,7 @@ class BST <T extends Comparable<T>>{
 			if(cmp < 0){
 				parent.left = nodeToRemove.right;
 				nodeToRemove.right.parent = parent;
+				parent.size--;
 			} else {
 				parent.right = nodeToRemove.right;
 				nodeToRemove.right.parent = parent;
@@ -141,6 +145,7 @@ class BST <T extends Comparable<T>>{
 			if(cmp < 0){
 				parent.left = nodeToRemove.left;
 				nodeToRemove.left.parent = parent;
+				parent.size--;
 			} else {
 				parent.right = nodeToRemove.left;
 				nodeToRemove.left.parent = parent;
@@ -153,6 +158,7 @@ class BST <T extends Comparable<T>>{
 			largest.parent.right = null;
 			nodeToRemove.key = largest.key;
 			nodeToRemove.parent = largest.parent;
+			parent.size--;
 		}
 		this.length--;
 		return true;
@@ -273,6 +279,8 @@ class BST <T extends Comparable<T>>{
 		BST<Integer> b = new BST<Integer>();
 		
 		b.minHeight(hop, 0, hop.size()-1);
+	
+//		System.out.println(b.root.key);
 		
 		//System.out.println(b.findMax());
 		

@@ -93,7 +93,7 @@ class LLists<Item> {
 	
 	public String show(){
 		String result = "";
-		Node node = this.head.next;
+		Node node = this.head;
 		while(node != this.tail){
 			result += node.key + ", ";
 			node = node.next;
