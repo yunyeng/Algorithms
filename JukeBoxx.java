@@ -59,6 +59,12 @@ class JukeBoxx {
 		current = songs.get(id-1);
 		current.play();
 	}
+	public void shuffle(){
+		current = Math.random(0, size);
+	}
+	public void stop(){
+		
+	}
 	
 	public static void main(String[] args) {
 		
